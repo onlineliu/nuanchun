@@ -53,7 +53,8 @@ public class Views {
         }
 
         if (num < 0 || num > 2) {
-           return menu();
+            System.out.println("您的输入有误，请重新输入！");
+            return menu();
         }
 
         return num;
@@ -69,7 +70,7 @@ public class Views {
         System.out.println("2. 快递修改");
         System.out.println("3. 快递删除");
         System.out.println("4. 查看所有快递");
-        System.out.println("0. 退出");
+        System.out.println("0. 返回上一级目录");
 
         String text = input.nextLine();
         int num = -1;
@@ -123,6 +124,10 @@ public class Views {
                 "，快递单号：" + e.getNumber() + "，取件码：" + e.getCode());
     }
 
+    public void printNull() {
+        System.out.println("快递不存在，请检查您的输入！");
+    }
+
     /**
      * 修改快递信息
      * @param e
@@ -162,14 +167,24 @@ public class Views {
         return num;
     }
 
-    public void printAll(Express[] es) {
-        if (es == null || es.length == 0) {
-            System.out.println("暂无快递");
-            return;
+    /**
+     * 将给定数组的快递信息，遍历显示
+     * @param es
+     */
+    public void printAll(Express[][] es) {
+        int count  = 0;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (es[i][j] != null) {
+                    count++;
+                    System.out.print("第" + (i + 1) + "排 " + (j + 1) + "列快递，");
+                    printExpress(es[i][j]);
+                }
+            }
         }
 
-        for (Express e : es) {
-            printExpress(e);
+        if (count == 0) {
+            System.out.println("暂无快递信息！");
         }
     }
 
@@ -196,6 +211,18 @@ public class Views {
         }
 
         return num;
+    }
+
+    public void expressExist() {
+        System.out.println("此单号在快递柜中已存在，请勿重复存储！");
+    }
+
+    public void printCode(Express e) {
+        System.out.println("快递的取件码为：" + e.getCode());
+    }
+
+    public void operationSuccess() {
+        System.out.println("操作成功！");
     }
 
 }

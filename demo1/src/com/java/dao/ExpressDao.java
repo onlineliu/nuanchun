@@ -70,7 +70,7 @@ public class ExpressDao {
         e.setNumber(number);
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                if (e.getNumber().equals(data[i][j].getNumber())) {
+                if (e.equals(data[i][j])) {
                     return data[i][j];
                 }
             }
@@ -85,7 +85,7 @@ public class ExpressDao {
      */
     public Express findByCode(int code) {
         for (int i = 0; i < 10; i++) {
-            for (int j = 0; i < 10; j++) {
+            for (int j = 0; j < 10; j++) {
                 if (data[i][j] != null) {
                     if (data[i][j].getCode() == code) {
                         return data[i][j];
@@ -97,25 +97,28 @@ public class ExpressDao {
     }
 
     /**
-     * 修改快递信息
-     * @param e
+     * 多余的操作，为了MVC更圆润
+     * @param oldExpress
+     * @param newExpress
      */
-    public void update(Express e) {
-        System.out.println("请输入新的快递单号：");
-        String number = input.nextLine();
-        System.out.println("请输入新的快递公司：");
-        String company = input.nextLine();
-        e.setNumber(number);
-        e.setCompany(company);
+    public void update(Express oldExpress, Express newExpress) {
+        delete(oldExpress);
+        add(newExpress);
     }
-
 
     public void delete(Express e) {
-
+        p:for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (e.equals(data[i][j])) {
+                    data[i][j] = null;
+                    break p;
+                }
+            }
+        }
     }
 
-    public void findAll() {
-
+    public Express[][] findAll() {
+        return data;
     }
 
 }
